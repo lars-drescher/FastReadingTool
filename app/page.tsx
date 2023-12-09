@@ -69,7 +69,7 @@ export default function Home() {
   );
 }
 
-export function StartReader({
+function StartReader({
   wordArray,
   wpm,
 }: {
