@@ -19,10 +19,11 @@ export default function Home() {
   );
   const [wordArray, setWordArray] = React.useState<Array<string>>([]);
   const [timeToRead, setTimeToRead] = React.useState(0);
-  const [wpm, setWpm] = React.useState(350);
+  const [wpm, setWpm] = React.useState<number | null>(350);
 
   React.useEffect(() => {
-    const timePerWord = 60 / wpm;
+    let timePerWord = 0;
+    if (wpm !== null) timePerWord = 60 / wpm;
     setWordArray(text.split(" "));
     setTimeToRead(Math.round(timePerWord * text.split(" ").length));
   }, [text, wpm]);
@@ -42,15 +43,19 @@ export default function Home() {
             setText(input.target.value);
           }}
           spellCheck={false}
+          maxLength={100000}
           className="mb-4 h-64"
         />
 
         <div className="flex gap-2">
           <Input
             type="number"
-            value={wpm}
-            onChange={(value) => {
-              setWpm(Number(value.target.value));
+            value={wpm as number}
+            onChange={(event) => {
+              setWpm(Number(event.target.value));
+              if (event.target.value === "" || event.target.value === "0")
+                setWpm(null);
+              if (Number(event.target.value) > 999) setWpm(999);
             }}
             placeholder="words per minute"
             className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -58,10 +63,12 @@ export default function Home() {
 
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">Start</Button>
+              <Button variant="outline" disabled={wpm === null ? true : false}>
+                Start
+              </Button>
             </DialogTrigger>
             <DialogContent className="w-full sm:max-w-[600px] h-full sm:h-auto">
-              <StartReader wordArray={wordArray} wpm={wpm} />
+              <StartReader wordArray={wordArray} wpm={wpm as number} />
             </DialogContent>
           </Dialog>
         </div>
@@ -117,7 +124,6 @@ function TextReader({
   React.useEffect(() => {
     setCurrentWord(wordArray[currentWordIndex]);
     setProgress(Math.round(((currentWordIndex + 1) / totalWords) * 100));
-    console.log(Math.round(((currentWordIndex + 1) / totalWords) * 100));
 
     if (currentWordIndex < wordArray.length - 1) {
       setTimeout(() => {
