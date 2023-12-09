@@ -37,7 +37,7 @@ export default function Home() {
         </div>
 
         <Textarea
-          placeholder="Text to read goes here..."
+          placeholder="Text goes here..."
           value={text}
           onChange={(input) => {
             setText(input.target.value);
@@ -47,7 +47,7 @@ export default function Home() {
           className="mb-4 h-64"
         />
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 relative">
           <Input
             type="number"
             value={wpm as number}
@@ -60,6 +60,7 @@ export default function Home() {
             placeholder="words per minute"
             className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
+          <span className="absolute right-0 mr-24 mt-2 select-none">wpm</span>
 
           <Dialog>
             <DialogTrigger asChild>
