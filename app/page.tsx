@@ -19,7 +19,7 @@ export default function Home() {
   );
   const [wordArray, setWordArray] = React.useState<Array<string>>([]);
   const [timeToRead, setTimeToRead] = React.useState(0);
-  const [wpm, setWpm] = React.useState(200);
+  const [wpm, setWpm] = React.useState(350);
 
   React.useEffect(() => {
     const timePerWord = 60 / wpm;
@@ -36,11 +36,12 @@ export default function Home() {
         </div>
 
         <Textarea
-          placeholder="Type your message here."
+          placeholder="Text to read goes here..."
           value={text}
           onChange={(input) => {
             setText(input.target.value);
           }}
+          spellCheck={false}
           className="mb-4 h-64"
         />
 
