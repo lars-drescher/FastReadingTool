@@ -144,7 +144,6 @@ function Timer({
   setStartReader: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [time, setTime] = React.useState(3);
-  const [currentWord, setCurrentWord] = React.useState("");
 
   React.useEffect(() => {
     if (time !== 0) {
