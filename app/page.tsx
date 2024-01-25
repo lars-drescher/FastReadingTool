@@ -93,7 +93,7 @@ function StartReader({
       <DialogHeader>
         <Progress className="mt-4" value={progress} />
       </DialogHeader>
-      <p className="text-center my-16 text-8xl">
+      <p className="text-center my-16 text-4xl">
         {startReader ? (
           <TextReader
             wordArray={wordArray}
